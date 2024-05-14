@@ -1,43 +1,44 @@
 import argparse
 import sys
 
+from scanner import Scanner
+
 class Lox:
     
     @staticmethod
-    def run_file(self, path:str) -> None:
-        if self.had_error:
+    def run_file(path: str) -> None:
+        if Lox.had_error:
             return
         f = open(path, "r")
-        self.run(f.read)
+        Lox.run(f.read)
     
 
     @staticmethod
-    def run_prompt(self) -> None:
+    def run_prompt() -> None:
         while True:
             print("> ")
             line = input()
             if line == None:
                 continue
-            self.run(line)
-            self.had_error = False
+            Lox.run(line)
+            Lox.had_error = False
 
     @staticmethod
-    def run(self, source: str) -> None:
-        print(source)
-    #     self.scanner = Scanner()
-    #     tokens = scanner.scan_tokens()
+    def run(source: str) -> None:
+        scanner = Scanner(source)
+        tokens = scanner.scan_tokens()
 
-    #     for token in tokens:
-    #         print(token)
+        for token in tokens:
+            print(token)
 
     @staticmethod
-    def error(self, line: int, message: str) -> None:
-        self.report(line, "", message)
+    def error(line: int, message: str) -> None:
+        Lox.report(line, "", message)
     
     @staticmethod
-    def report(self, line: int, where: str, message: str) -> None:
-        print("[line " + line + "] Error" + where + ": " + "message")
-        self.had_error = True
+    def report(line: int, where: str, message: str) -> None:
+        print("[line " + line + "] Error" + where + ": " + message)
+        Lox.had_error = True
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Lox interpreter in python')
