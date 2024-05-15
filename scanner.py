@@ -98,20 +98,20 @@ class Scanner:
             case '"':
                 self.string()
 
-            case '_':
+            case _:
                 if self.is_digit(c):
                     self.number()
                 elif self.is_alpha(c):
                     self.identifier() 
                 else:
-                    lox.Lox.error(line, "Unexpected character.")
+                    lox.Lox.error(self.line, "Unexpected character.")
 
 
     def identifier(self) -> None:
         while self.is_alpha_numeric(self.peek()):
             self.advance()
         
-        text = self.source[self.start, self.current]
+        text = self.source[self.start: self.current]
         token_type = Scanner.keywords.get(text)
         if token_type is None:
             token_type = TokenType.IDENTIFIER 
@@ -150,7 +150,7 @@ class Scanner:
         while self.is_digit(self.peek()):
             self.advance()
         
-        self.add_token(TokenType.NUMBER, float(self.source[self.start, self.current]))
+        self.add_token(TokenType.NUMBER, float(self.source[self.start: self.current]))
     
 
     def is_digit(self, c: str) -> bool:
@@ -183,7 +183,7 @@ class Scanner:
         
         self.advance() # closing "
 
-        value = self.source[self.start + 1, self.current - 1]
+        value = self.source[self.start + 1: self.current - 1]
         self.add_token(TokenType.STRING, value)
 
 

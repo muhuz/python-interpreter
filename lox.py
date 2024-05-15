@@ -36,7 +36,7 @@ class Lox:
     
     @staticmethod
     def report(line: int, where: str, message: str) -> None:
-        print("[line " + line + "] Error" + where + ": " + message)
+        print("[line " + str(line) + "] Error" + where + ": " + message)
         Lox.had_error = True
 
 if __name__ == '__main__':
