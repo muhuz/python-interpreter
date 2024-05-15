@@ -1,3 +1,4 @@
+import lox
 from lox_token import Token
 from token_type import TokenType
 
@@ -103,7 +104,7 @@ class Scanner:
                 elif self.is_alpha(c):
                     self.identifier() 
                 else:
-                    print(self.line, "Unexpected Character.")
+                    lox.Lox.error(line, "Unexpected character.")
 
 
     def identifier(self) -> None:
@@ -165,8 +166,9 @@ class Scanner:
     
 
     def advance(self) -> str:
+        char = self.source[self.current]
         self.current += 1
-        return self.source[self.current]
+        return char
     
 
     def string(self) -> None:

@@ -1,7 +1,6 @@
 import argparse
-import sys
 
-from scanner import Scanner
+import scanner
 
 class Lox:
     
@@ -25,8 +24,8 @@ class Lox:
 
     @staticmethod
     def run(source: str) -> None:
-        scanner = Scanner(source)
-        tokens = scanner.scan_tokens()
+        scan = scanner.Scanner(source)
+        tokens = scan.scan_tokens()
 
         for token in tokens:
             print(token)
