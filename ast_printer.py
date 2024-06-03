@@ -2,9 +2,9 @@ from expr import *
 from token_type import *
 from lox_token import Token
 
-class AstPrinter(Expr):
-    def __str__(self, expr):
-        return expr.accept()
+class AstPrinter(Visitor):
+    def print(self, expr):
+        return expr.accept(self)
 
     def visit_binary_expr(self, expr) -> str:
         return self.parenthesize(expr.operator.lexeme, expr.left, expr.right)
@@ -24,7 +24,7 @@ class AstPrinter(Expr):
         return_str = "(" + name
         for expr in exprs:
             return_str += " "
-            return_str += expr.accept()
+            return_str += expr.accept(self)
         return_str += ")"
         return return_str
 
@@ -37,3 +37,6 @@ if __name__ == "__main__":
         Token(TokenType.STAR, "*", None, 1),
         Grouping(Literal(45.67))
     )
+    printer = AstPrinter()
+
+    print(printer.print(expression))

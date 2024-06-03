@@ -21,9 +21,9 @@ def define_ast(output_dir: str, base_name: str, types: list[str]) -> None:
         fields = type.split(":")[1].strip()
         define_type(f, base_name, class_name, fields)
     
-        f.write("\t@abstractmethod\n")
-        f.write("\tdef accept(visitor):\n")
-        f.write("\t\treturn visitor.visit" + class_name + base_name + "()\n\n")
+        # f.write("\t@abstractmethod\n")
+        f.write("\tdef accept(self, visitor):\n")
+        f.write("\t\treturn visitor.visit" + '_' + class_name.lower() + '_' + base_name.lower() + "(self)\n\n")
     
     define_visitor(f, base_name, types)
 
@@ -32,7 +32,7 @@ def define_visitor(f, base_name: str, types: list[str]) -> None:
     f.write("class Visitor(ABC):\n")
     for type in types:
         type_name = type.split(":")[0].strip()
-        f.write("\tdef visit" + type_name + base_name + "(" + base_name.lower() + ": " + type_name + "):\n")
+        f.write("\tdef visit" + '_' + type_name.lower() + '_' + base_name.lower() + "(" + base_name.lower() + ": " + type_name + "):\n")
         f.write("\t\tpass\n\n")
     f.write("\n")
 
